@@ -1,5 +1,23 @@
 apply plugin: 'com.android.application'
+apply plugin: 'de.felixschulze.gradle.hockeyapp'
+
 import groovy.time.TimeCategory
+
+// Assume that if we have a 'hockeyAppApiToken' environment property
+// then we want to configure the hockeyapp gradle plugin
+if (project.hasProperty("hockeyAppApiToken")) {
+    hockeyapp {
+        apiToken = "${project.property("hockeyAppApiToken")}"
+        releaseType = "${project.property("hockeyAppReleaseType")}" // 0 beta, 1 live, 2 alpha
+        notify = "${project.property("hockeyAppNotify")}" // 0 not notify testers, 1 notify all testers that can install this app
+        status = "${project.property("hockeyAppDownloadStatus")}" // 1 not allow users to download the version, 2 make the version available for download
+        mandatory = "${project.property("hockeyAppMandatoryUpdate")}" // 0 not mandatory, 1 mandatory
+        variantToApplicationId = [
+                hockeyDebug: project.property("hockeyAppId"),
+                hockeyRelease: project.property("hockeyAppId")
+        ]
+    }
+}
 
 android {
     compileSdkVersion 22
@@ -62,3 +80,59 @@ dependencies {
     // hockey app dependency
     hockeyCompile 'net.hockeyapp.android:HockeySDK:3.5.0'
 }
+
+// ###############################################################################
+// Ignore all 'hockey' flavors unless explicitly specified in the gradle command :
+// ###############################################################################
+//
+// The following tasks will ignore building any of the 'hockey' variants because 'hockey' does not appear in the task name:
+// -----------
+// Build tasks
+//      assemble - Assembles all variants of all applications and secondary packages.
+//      assembleAndroidTest - Assembles all the Test applications.
+//      assembleDebug - Assembles all Debug builds.
+//      assembleProduction - Assembles all Production builds.
+//      assembleProductionDebug - Assembles the DebugProduction build.
+//      assembleProductionDebugAndroidTest - Assembles the android (on device) tests for the ProductionDebug build.
+//      assembleProductionRelease - Assembles the ReleaseProduction build.
+//      assembleRelease - Assembles all Release builds.
+//      build - Assembles and tests this project.
+//      etc ...
+//
+// ie: ./gradlew assemble
+//
+//
+// Explicitly invoking the following tasks will NOT be ignored because 'hockey' appears in the task name:
+// -------------
+// Build tasks
+//      assembleHockey - Assembles all Hockey builds.
+//      assembleHockeyDebug - Assembles the DebugHockey build.
+//      assembleHockeyDebugAndroidTest - Assembles the android (on device) tests for the HockeyDebug build.
+//      assembleHockeyRelease - Assembles the ReleaseHockey build.
+//      uploadHockeyDebugToHockeyApp - Upload 'hockeyDebug' to HockeyApp
+//      uploadHockeyReleaseToHockeyApp - Upload 'hockeyRelease' to HockeyApp
+//
+// ie: ./gradlew assembleHockey
+//
+// NOTE : Uncomment the following block if you want to ignore the 'hockey' flavor unless explicitly specified
+/*
+android.variantFilter { variant ->
+  Gradle gradle = project.getGradle();
+  if(variant.getFlavors().get(0).name.equalsIgnoreCase('hockey') &&
+    gradle != null && gradle.startParameter != null) {
+
+    for (int i = 0; i < gradle.startParameter.taskNames.size(); i++) {
+        def taskName = gradle.startParameter.taskNames.get(i).toLowerCase();
+        if (taskName.equals("clean"))  continue;
+
+        // Ignore the variants IFF the 'hockey' does not explicitly appear
+        // in the gradle startParameter taskName
+        if (!(taskName.contains("hockey"))) {
+            variant.setIgnore(true);
+            break;
+        }
+    }
+  }
+}
+*/
+
