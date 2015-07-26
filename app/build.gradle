@@ -43,6 +43,9 @@ android {
                 if (project.hasProperty("hockeyAppEnableTracking")) {
                     buildConfigField "boolean", "HOCKEYAPP_ENABLE_TRACKING", "${project.property("hockeyAppEnableTracking")}"
                 }
+                if (project.hasProperty("hockeyAppEnableFeedback")) {
+                    buildConfigField "boolean", "HOCKEYAPP_ENABLE_FEEDBACK", "${project.property("hockeyAppEnableFeedback")}"
+                }
                 if (project.hasProperty("hockeyAppExpireDays")) {
 
                     def now = new Date()

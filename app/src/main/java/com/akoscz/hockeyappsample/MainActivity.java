@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import net.hockeyapp.android.FeedbackManager;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -27,8 +29,11 @@ public class MainActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+
+        if (BuildConfig.HOCKEYAPP_ENABLE_FEEDBACK && id == R.id.action_feedback) {
+            FeedbackManager.register(this, BuildConfig.HOCKEYAPP_ID, null);
+            FeedbackManager.showFeedbackActivity(this);
+
             return true;
         }
 

@@ -4,6 +4,8 @@
         <activity android:name="net.hockeyapp.android.UpdateActivity" />
         <activity android:name="net.hockeyapp.android.LoginActivity" />
         <activity android:name="net.hockeyapp.android.ExpiryInfoActivity" />
+        <activity android:name="net.hockeyapp.android.FeedbackActivity" />
+        <activity android:name="net.hockeyapp.android.PaintActivity" />
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />
