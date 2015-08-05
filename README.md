@@ -8,11 +8,40 @@ This sample app uses the [ActivityLifecycleCallbacks](http://developer.android.c
 ## Setup
   * [Sign up](https://rink.hockeyapp.net/users/sign_up) for HockeyApp
   * Create a ["New App"](screenshots/Dashboard_NewApp.png) from the HockeyApp dashboard
-  * Find the [App ID and Secret](screenshots/AppID_Secret.png) on your HockeyApp app page 
-  * Create an API Token:  [Account Settings > API Tokens > Create](screenshots/AccountSetting_CreateApiToken.png)
-  * edit [app/gradle.properties](app/gradle.properties) and replace `YOUR_API_TOKEN`, `YOUR_APP_ID` and `YOUR_APP_SECRET` with your valid API Token, App ID and App Secret values.
-  
-*NOTE:* You MUST have a valid API Token, App ID and App Secret for this sample application to work.
+  * Find the [App ID and Secret](screenshots/AppID_Secret.png) on your HockeyApp app page *MAdNDATORY*
+  * **OPTIONAL** Create an API Token:  [Account Settings > API Tokens > Create](screenshots/AccountSetting_CreateApiToken.png) (*only neede if you want gradle to upload your apk to HockeyApp.*)
+  * edit [app/gradle.properties](app/gradle.properties) and replace `YOUR_APP_ID`, `YOUR_APP_SECRET` and `YOUR_API_TOKEN` (optional, see above) with your valid App ID, App Secret and API Token values.
+ 
+## Build and Upload gradle commands
+*NOTE:* you MUST have a valid API Token for upload to work
+```
+HockeyApp tasks
+---------------
+uploadHockeyDebugToHockeyApp - Upload 'hockeyDebug' to HockeyApp
+uploadHockeyReleaseToHockeyApp - Upload 'hockeyRelease' to HockeyApp
+uploadProductionDebugToHockeyApp - Upload 'productionDebug' to HockeyApp
+uploadProductionReleaseToHockeyApp - Upload 'productionRelease' to HockeyApp
+```
+
+Example: `sh gradlew uploadHockeyReleaseToHockeyApp` 
+This will build the *HockeyRelease* flavor and upload your build to HockeyApp.
+
+## Building *without* uploading to HockeyApp
+```
+Build tasks
+-----------
+assemble - Assembles all variants of all applications and secondary packages.
+assembleDebug - Assembles all Debug builds.
+assembleHockey - Assembles all Hockey builds.
+assembleHockeyDebug - Assembles the DebugHockey build.
+assembleHockeyRelease - Assembles the ReleaseHockey build.
+assembleProduction - Assembles all Production builds.
+assembleProductionDebug - Assembles the DebugProduction build.
+assembleProductionRelease - Assembles the ReleaseProduction build.
+assembleRelease - Assembles all Release builds.
+```
+Example: `sh gradlew assembleHockeyRelease`
+This will build the *HockeyRelease* flavor and produce an apk file in your `app/build/outputs/apk/` directory.
 
 ## Dependencies
   * [com.android.support:appcompat-v7:22.2.0](https://developer.android.com/tools/support-library/features.html#v7-appcompat)
