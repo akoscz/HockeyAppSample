@@ -8,8 +8,8 @@ This sample app uses the [ActivityLifecycleCallbacks](http://developer.android.c
 ## Setup
   * [Sign up](https://rink.hockeyapp.net/users/sign_up) for HockeyApp
   * Create a ["New App"](screenshots/Dashboard_NewApp.png) from the HockeyApp dashboard
-  * Find the [App ID and Secret](screenshots/AppID_Secret.png) on your HockeyApp app page *MAdNDATORY*
-  * **OPTIONAL** Create an API Token:  [Account Settings > API Tokens > Create](screenshots/AccountSetting_CreateApiToken.png) (*only neede if you want gradle to upload your apk to HockeyApp.*)
+  * **MANDATORY** Find the [App ID and Secret](screenshots/AppID_Secret.png) on your HockeyApp app page  (*this sample app will NOT work without the App ID and App Secret*)
+  * **OPTIONAL** Create an API Token:  [Account Settings > API Tokens > Create](screenshots/AccountSetting_CreateApiToken.png) (*only needed if you want gradle to upload your apk to HockeyApp.*)
   * edit [app/gradle.properties](app/gradle.properties) and replace `YOUR_APP_ID`, `YOUR_APP_SECRET` and `YOUR_API_TOKEN` (optional, see above) with your valid App ID, App Secret and API Token values.
  
 ## Build and Upload gradle commands
